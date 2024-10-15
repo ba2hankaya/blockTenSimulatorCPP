@@ -1,0 +1,10 @@
+for x = 20.000.000 
+
+1 thread 1m 10s
+2 threads 47s
+4 threads 46s
+8 threads 52s
+16 threads 57s
+
+
+cpu = AMD 7800x3D 16 core
