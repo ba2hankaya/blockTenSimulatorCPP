@@ -1,0 +1,7 @@
+analyser_2.py was adjusted according to the value found in the results.doc to find the average return for a number of given games, printing each games own return and averaging them(instead of single games this could be hundred ./sim.cpp 100 or a thousand ./sim.cpp 1000 results)
+According to the ten_hundred dataset the avg return was 93.6045
+According to the hundred_hundred dataset the avg return was 90.25665
+According to the thousand_thousand dataset the avg return was 93.2823
+
+hundred hundred dataset is probably an outlier and the avg return is closer to 93.282, this is significantly less than the expected result, 94. This could be due to the rounding down of the exact value of the x coefficient.
+
