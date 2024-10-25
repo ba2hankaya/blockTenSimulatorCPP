@@ -21,51 +21,51 @@ struct card{
 };
 
 vector<card> CreateDeck(){
-        vector<card> deck;
-        for(int j = 0; j < 4; ++j){
-                enum CardSuit temp;
-                switch(j){
-                        case 0:
-                                temp = Spades;
-                                break;
-                        case 1:
-                                temp = Hearts;
-                                break;
-                        case 2:
-                                temp = Diamonds;
-                                break;
-                        case 3:
-                                temp = Clubs;
-                                break;
-                }
-                for(int i = 1; i <= 13; i++){
-                        card mycard = {temp , i};
-                        deck.push_back(mycard);
-                }
-        }
-        return deck;
+	vector<card> deck;
+	for(int j = 0; j < 4; ++j){
+		enum CardSuit temp;
+		switch(j){
+			case 0:
+				temp = Spades;
+				break;
+			case 1:
+				temp = Hearts;
+				break;
+			case 2:
+				temp = Diamonds;
+				break;
+			case 3:
+				temp = Clubs;
+				break;
+		}
+		for(int i = 1; i <= 13; i++){
+			card mycard = {temp , i};
+			deck.push_back(mycard);
+		}
+	}
+	return deck;
 }
 
 card PickARandomCard(vector<card>& deck){
-		if(deck.size() == 0){
-			card x;
-			x.value = 10;
-			CardSuit s = Spades; 
-			x.suit = s;
-			return x;
-		}
-        int index = rand() % deck.size();
-        card mycard = deck[index];
-        deck.erase(deck.begin()+index);
-        return mycard;
+	if(deck.size() == 0){
+		card x;
+		x.value = 10;
+		CardSuit s = Spades; 
+		x.suit = s;
+		return x;
+	}
+	int index = rand() % deck.size();
+	card mycard = deck[index];
+	deck.erase(deck.begin()+index);
+	return mycard;
 }
 
 vector<card> GenTable(vector<card>& deck){
-        vector<card> table(table_length*table_length);
-        for(int j = 0; j < table_length*table_length; ++j){
-                table[j] = PickARandomCard(deck);
-        }
-        return table;
+	vector<card> table(table_length*table_length);
+	for(int j = 0; j < table_length*table_length; ++j){
+		table[j] = PickARandomCard(deck);
+	}
+	return table;
 }
 
 void printTable(const vector<card>& table){
@@ -76,36 +76,36 @@ void printTable(const vector<card>& table){
 }
 
 int numberOfMoves(){
-        vector<card> deck = CreateDeck();
-        vector<card> table = GenTable(deck);
-        //printTable(table);
-		int count = 0;
-		int x = -1;
-		while(x != count){
-			x = count;
-			for(int i = 0; i < table.size()-1; i++){
-				if(table[i].value == 10){
-					continue;
-				}
-				for(int j = i+1; j < table.size(); j++){
-					if(table[i].value == table[j].value){
-						count++;
-						table[i] = PickARandomCard(deck);
-						table[j] = PickARandomCard(deck);
-						goto end;
-					}
+	vector<card> deck = CreateDeck();
+	vector<card> table = GenTable(deck);
+	//printTable(table);
+	int count = 0;
+	int x = -1;
+	while(x != count){
+		x = count;
+		for(int i = 0; i < table.size()-1; i++){
+			if(table[i].value == 10){
+				continue;
+			}
+			for(int j = i+1; j < table.size(); j++){
+				if(table[i].value == table[j].value){
+					count++;
+					table[i] = PickARandomCard(deck);
+					table[j] = PickARandomCard(deck);
+					goto end;
 				}
 			}
-			end:
 		}
-        return count;
+		end:
+	}
+	return count;
 }
 
 #include <chrono>
 using namespace std::chrono;
 uint64_t timeSinceEpochMillisec() {
-  using namespace std::chrono;
-  return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	using namespace std::chrono;
+	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
 
 void FillMap(map<int, int>& mp, int x){
