@@ -5,46 +5,9 @@
 #include <map>
 #include <thread>
 #include <mutex>
+#include "deck.h"
 #define table_length 3
 using namespace std;
-
-enum CardSuit{
-        Spades,
-        Hearts,
-        Diamonds,
-        Clubs
-};
-
-struct card{
-        enum CardSuit suit;
-        int value;
-};
-
-vector<card> CreateDeck(){
-	vector<card> deck;
-	for(int j = 0; j < 4; ++j){
-		enum CardSuit temp;
-		switch(j){
-			case 0:
-				temp = Spades;
-				break;
-			case 1:
-				temp = Hearts;
-				break;
-			case 2:
-				temp = Diamonds;
-				break;
-			case 3:
-				temp = Clubs;
-				break;
-		}
-		for(int i = 1; i <= 13; i++){
-			card mycard = {temp , i};
-			deck.push_back(mycard);
-		}
-	}
-	return deck;
-}
 
 card PickARandomCard(vector<card>& deck){
 	if(deck.size() == 0){
