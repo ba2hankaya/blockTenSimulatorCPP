@@ -57,17 +57,11 @@ int numberOfMoves(vector<card>& deck){
 
 
 void FillMap(map<int, int>& mp, int x){
-	
 	vector<card> deck = CreateDeck();
 	while(x>0){
-
 		ShuffleDeck(deck);
 		int res = numberOfMoves(deck);
-		if(mp.find(res) == mp.end()){
-			mp[res] = 1;
-		}else{
-			mp[res]++;
-		}
+		mp[res]++;
 		x--;
 	}
 }
