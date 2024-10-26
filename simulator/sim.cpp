@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stdlib.h>
-#include <time.h>
 #include <map>
 #include <thread>
 #include <mutex>
@@ -9,19 +7,6 @@
 #define table_length 3
 using namespace std;
 
-card PickARandomCard(vector<card>& deck){
-	if(deck.size() == 0){
-		card x;
-		x.value = 10;
-		CardSuit s = Spades; 
-		x.suit = s;
-		return x;
-	}
-	int index = rand() % deck.size();
-	card mycard = deck[index];
-	deck.erase(deck.begin()+index);
-	return mycard;
-}
 
 vector<card> GenTable(vector<card>& deck){
 	vector<card> table(table_length*table_length);
@@ -50,6 +35,9 @@ int numberOfMoves(){
 			if(table[i].value == 10){
 				continue;
 			}
+			if(table[i].value == -1){
+				continue;
+			}
 			for(int j = i+1; j < table.size(); j++){
 				if(table[i].value == table[j].value){
 					count++;
@@ -64,12 +52,6 @@ int numberOfMoves(){
 	return count;
 }
 
-#include <chrono>
-using namespace std::chrono;
-uint64_t timeSinceEpochMillisec() {
-	using namespace std::chrono;
-	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-}
 
 void FillMap(map<int, int>& mp, int x){
 	while(x>0){
@@ -84,8 +66,6 @@ void FillMap(map<int, int>& mp, int x){
 }
 
 int main(int argc, char* argv[]){
-
-    srand(timeSinceEpochMillisec());
 	cout << "running " << stoi(argv[1]) << " simulations..." << endl;
 	int x = stoi(argv[1]);
 	vector<thread> th_list;
