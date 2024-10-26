@@ -2,7 +2,6 @@
 #include <vector>
 #include <map>
 #include <thread>
-#include <mutex>
 #include "deck.h"
 #define table_length 3
 using namespace std;
@@ -70,7 +69,6 @@ int main(int argc, char* argv[]){
 	cout << "running " << stoi(argv[1]) << " simulations..." << endl;
 	int x = stoi(argv[1]);
 	vector<thread> th_list;
-	mutex map_mutex;
 	vector<map<int ,int>> thread_maps(4);
 	map<int , int> mp;
 	if(x>1000){
@@ -84,26 +82,12 @@ int main(int argc, char* argv[]){
 		FillMap(mp, x);
 	}
 
-    //std::lock_guard<std::mutex> lock(map_mutex);
 	for (const auto& local_map : thread_maps) {
  	       
 		for(auto& line : local_map){
 			mp[line.first] += line.second;
 		}
-	//	mp.insert(local_map.begin(), local_map.end());
     }
-	//FillMap(mp,x);
-	//while(x > 0){
-	//	int res = numberOfMoves();
-		//cout << (100 - x) << " th run";
-	//	if(mp.find(res) == mp.end()){
-	//		mp[res] = 1;
-	//	}else{
-	//		mp[res]++;
-	//	}
-		//cout << "result of run : " << res << endl; 
-	//	x--;
-	//}
     for(auto& line : mp){
 		cout << line.first << " : " << line.second << endl;
 	}
