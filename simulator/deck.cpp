@@ -5,7 +5,7 @@
 using namespace std;
 
 void ShuffleDeck(vector<card>& deck){
-	shuffle(deck.begin(),deck.end(), mt19937(random_device()()));
+	random_shuffle(deck.begin(),deck.end());
 }
 
 card GetXthCard(const vector<card>& deck, const int& index){
