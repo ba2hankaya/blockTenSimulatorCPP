@@ -19,8 +19,10 @@ struct card
 
 const card EmptyCard = {Empty,-1};
 
+
+void ShuffleDeck(std::vector<card>& deck);
 std::vector<card> CreateDeck();
-card GetTheXthCard(const std::vector<card>& deck, const int& index);
+card GetXthCard(const std::vector<card>& deck, const int& index);
 #endif
 
 

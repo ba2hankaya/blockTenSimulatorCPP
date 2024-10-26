@@ -4,11 +4,11 @@
 #include <random>
 using namespace std;
 
-void ShuffleTheDeck(vector<card>& deck){
+void ShuffleDeck(vector<card>& deck){
 	shuffle(deck.begin(),deck.end(), mt19937(random_device()()));
 }
 
-card GetTheXthCard(const vector<card>& deck, const int& index){
+card GetXthCard(const vector<card>& deck, const int& index){
 	return index >= deck.size() ? EmptyCard : deck[index];
 }
 
