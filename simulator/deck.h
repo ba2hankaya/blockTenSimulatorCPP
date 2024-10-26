@@ -7,7 +7,8 @@ enum CardSuit
 	Spades,
 	Hearts,
 	Diamonds,
-	Clubs
+	Clubs,
+	Empty
 };
 
 struct card
@@ -16,8 +17,10 @@ struct card
 	int value;
 };
 
-std::vector<card> CreateDeck();
+const card EmptyCard = {Empty,-1};
 
+std::vector<card> CreateDeck();
+card PickARandomCard(std::vector<card>& deck);
 #endif
 
 
