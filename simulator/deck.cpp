@@ -1,33 +1,15 @@
 #include <vector>
 #include "deck.h"
-#include <stdlib.h>
-#include <chrono>
+#include <algorithm>
+#include <random>
 using namespace std;
 
-
-using namespace std::chrono;
-uint64_t timeSinceEpochMillisec() {
-	using namespace std::chrono;
-	return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+void ShuffleTheDeck(vector<card>& deck){
+	shuffle(deck.begin(),deck.end(), mt19937(random_device()()));
 }
 
-card PickARandomCard(vector<card>& deck){
-	srand(timeSinceEpochMillisec());
-	if(deck.size() == 0){
-		return EmptyCard;
-	}
-
-	//if(deck.size() == 0){
-	//	card x;
-	//	x.value = 10;
-	//	CardSuit s = Spades; 
-	//	x.suit = s;
-	//	return x;
-	//}
-	int index = rand() % deck.size();
-	card mycard = deck[index];
-	deck.erase(deck.begin()+index);
-	return mycard;
+card GetTheXthCard(const vector<card>& deck, const int& index){
+	return index >= deck.size() ? EmptyCard : deck[index];
 }
 
 vector<card> CreateDeck(){

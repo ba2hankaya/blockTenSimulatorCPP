@@ -20,7 +20,7 @@ struct card
 const card EmptyCard = {Empty,-1};
 
 std::vector<card> CreateDeck();
-card PickARandomCard(std::vector<card>& deck);
+card GetTheXthCard(const std::vector<card>& deck, const int& index);
 #endif
 
 
