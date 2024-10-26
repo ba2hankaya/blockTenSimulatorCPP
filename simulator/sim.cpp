@@ -8,11 +8,14 @@
 using namespace std;
 
 
-vector<card> GenTable(vector<card>& deck){
+vector<card> GenTable(vector<card>& deck, int& index){
 	vector<card> table(table_length*table_length);
-	for(int j = 0; j < table_length*table_length; ++j){
-		table[j] = PickARandomCard(deck);
+	int j = 0;
+	while(j < table_length*table_length){
+		table[j] = GetXthCard(deck, j);
+		j++;
 	}
+	index = j;
 	return table;
 }
 
@@ -23,9 +26,9 @@ void printTable(const vector<card>& table){
     cout << "--------------------------------------" << endl;
 }
 
-int numberOfMoves(){
-	vector<card> deck = CreateDeck();
-	vector<card> table = GenTable(deck);
+int numberOfMoves(vector<card>& deck){
+	int currentIndex = 0;
+	vector<card> table = GenTable(deck, currentIndex);
 	//printTable(table);
 	int count = 0;
 	int x = -1;
@@ -41,8 +44,8 @@ int numberOfMoves(){
 			for(int j = i+1; j < table.size(); j++){
 				if(table[i].value == table[j].value){
 					count++;
-					table[i] = PickARandomCard(deck);
-					table[j] = PickARandomCard(deck);
+					table[i] = GetXthCard(deck, currentIndex++);
+					table[j] = GetXthCard(deck, currentIndex++);
 					goto end;
 				}
 			}
@@ -54,8 +57,12 @@ int numberOfMoves(){
 
 
 void FillMap(map<int, int>& mp, int x){
+	
+	vector<card> deck = CreateDeck();
 	while(x>0){
-	int res = numberOfMoves();
+
+		ShuffleDeck(deck);
+		int res = numberOfMoves(deck);
 		if(mp.find(res) == mp.end()){
 			mp[res] = 1;
 		}else{
@@ -74,7 +81,7 @@ int main(int argc, char* argv[]){
 	map<int , int> mp;
 	if(x>1000){
 		for(int i = 0; i < 4; i++){
-			th_list.push_back(thread(FillMap, ref(thread_maps[i]), x/4));
+			th_list.emplace_back(thread(FillMap, ref(thread_maps[i]), x/4));
 		}
 		for(auto& t : th_list){
 			t.join();
@@ -83,9 +90,13 @@ int main(int argc, char* argv[]){
 		FillMap(mp, x);
 	}
 
+    //std::lock_guard<std::mutex> lock(map_mutex);
 	for (const auto& local_map : thread_maps) {
-        std::lock_guard<std::mutex> lock(map_mutex);
-        mp.insert(local_map.begin(), local_map.end());
+ 	       
+		for(auto& line : local_map){
+			mp[line.first] += line.second;
+		}
+	//	mp.insert(local_map.begin(), local_map.end());
     }
 	//FillMap(mp,x);
 	//while(x > 0){
