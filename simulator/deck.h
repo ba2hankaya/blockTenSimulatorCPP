@@ -17,12 +17,18 @@ struct card
 	int value;
 };
 
+class Deck{
+	private:
+		std::vector<card> card_vec;
+		int index = 0;
+	public:
+		Deck();
+		card GetAndRemoveTopCard();
+		void Shuffle();
+		card CardAtIndex(const int& index);
+};
+
 const card EmptyCard = {Empty,-1};
-
-
-void ShuffleDeck(std::vector<card>& deck);
-std::vector<card> CreateDeck();
-card GetXthCard(const std::vector<card>& deck, const int& index);
 #endif
 
 
