@@ -7,14 +7,11 @@
 using namespace std;
 
 
-vector<card> GenTable(vector<card>& deck, int& index){
+vector<card> GenTable(Deck& deck){
 	vector<card> table(table_length*table_length);
-	int j = 0;
-	while(j < table_length*table_length){
-		table[j] = GetXthCard(deck, j);
-		j++;
+	for(int i = 0;i < table_length*table_length;i++){
+		table[i] = deck.GetAndRemoveTopCard();
 	}
-	index = j;
 	return table;
 }
 
@@ -25,9 +22,9 @@ void printTable(const vector<card>& table){
     cout << "--------------------------------------" << endl;
 }
 
-int numberOfMoves(vector<card>& deck){
+int numberOfMoves(Deck& deck){
 	int currentIndex = 0;
-	vector<card> table = GenTable(deck, currentIndex);
+	vector<card> table = GenTable(deck);
 	//printTable(table);
 	int count = 0;
 	int x = -1;
@@ -43,8 +40,8 @@ int numberOfMoves(vector<card>& deck){
 			for(int j = i+1; j < table.size(); j++){
 				if(table[i].value == table[j].value){
 					count++;
-					table[i] = GetXthCard(deck, currentIndex++);
-					table[j] = GetXthCard(deck, currentIndex++);
+					table[i] = deck.GetAndRemoveTopCard();
+					table[j] = deck.GetAndRemoveTopCard();
 					goto end;
 				}
 			}
@@ -56,9 +53,9 @@ int numberOfMoves(vector<card>& deck){
 
 
 void FillMap(map<int, int>& mp, int x){
-	vector<card> deck = CreateDeck();
 	while(x>0){
-		ShuffleDeck(deck);
+		Deck deck;
+		deck.Shuffle();
 		int res = numberOfMoves(deck);
 		mp[res]++;
 		x--;
