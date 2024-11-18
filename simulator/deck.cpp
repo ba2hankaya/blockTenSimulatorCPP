@@ -22,8 +22,8 @@ Deck::Deck(){
 	//			temp = Clubs;
 	//			break;
 	//	}
-		for(int i = 1; i <= DECK_SIZE/4; i++){
-			card mycard = {static_cast<CardSuit>(j) , i};
+		for(int i = 0; i < DECK_SIZE/4; i++){
+			card mycard = {static_cast<CardSuit>(j) , i+1};
 			deckarr[i+j*13] = mycard;
 		}
 	}
@@ -34,7 +34,7 @@ card Deck::CardAtIndex(const int& index){
 }
 
 void Deck::Shuffle(){
-	shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
+	random_shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
 }
 
 card Deck::GetAndRemoveTopCard(){

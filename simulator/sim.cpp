@@ -42,7 +42,7 @@ int numberOfMoves(Deck& deck){
 					count++;
 					table[i] = deck.GetAndRemoveTopCard();
 					table[j] = deck.GetAndRemoveTopCard();
-					printTable(table);
+					//printTable(table);
 					goto end;
 				}
 			}
