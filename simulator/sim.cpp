@@ -25,7 +25,7 @@ void printTable(const vector<card>& table){
 int numberOfMoves(Deck& deck){
 	int currentIndex = 0;
 	vector<card> table = GenTable(deck);
-	//printTable(table);
+//	printTable(table);
 	int count = 0;
 	int x = -1;
 	while(x != count){
@@ -42,6 +42,7 @@ int numberOfMoves(Deck& deck){
 					count++;
 					table[i] = deck.GetAndRemoveTopCard();
 					table[j] = deck.GetAndRemoveTopCard();
+					printTable(table);
 					goto end;
 				}
 			}

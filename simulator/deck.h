@@ -21,7 +21,7 @@ struct card
 
 class Deck{
 	private:
-		card[DECK_SIZE] deckarr;
+		card deckarr[DECK_SIZE];
 		//std::vector<card> card_vec;
 		int index = 0;
 	public:

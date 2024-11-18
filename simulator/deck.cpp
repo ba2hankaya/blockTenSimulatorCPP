@@ -6,7 +6,7 @@ using namespace std;
 
 
 Deck::Deck(){
-	for(int j = 1; j <= 4; ++j){
+	for(int j = 0; j < 4; ++j){
 	//	enum CardSuit temp;
 	//	switch(j){
 	//		case 0:
@@ -21,10 +21,10 @@ Deck::Deck(){
 	//		case 3:
 	//			temp = Clubs;
 	//			break;
-		}
+	//	}
 		for(int i = 1; i <= DECK_SIZE/4; i++){
-			card mycard = {j , i};
-			deckarr[i+(j-1)*13](mycard);
+			card mycard = {static_cast<CardSuit>(j) , i};
+			deckarr[i+j*13] = mycard;
 		}
 	}
 }
@@ -34,7 +34,7 @@ card Deck::CardAtIndex(const int& index){
 }
 
 void Deck::Shuffle(){
-	random_shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
+	shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
 }
 
 card Deck::GetAndRemoveTopCard(){
