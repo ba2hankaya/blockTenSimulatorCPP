@@ -2,6 +2,8 @@
 #ifndef DECK_H
 #define DECK_H
 
+const int DECK_SIZE = 52;
+
 enum CardSuit
 {
 	Spades,
@@ -19,7 +21,8 @@ struct card
 
 class Deck{
 	private:
-		std::vector<card> card_vec;
+		card deckarr[DECK_SIZE];
+		//std::vector<card> card_vec;
 		int index = 0;
 	public:
 		Deck();
