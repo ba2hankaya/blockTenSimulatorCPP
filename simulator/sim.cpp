@@ -38,7 +38,10 @@ int numberOfMoves(Deck& deck){
 				continue;
 			}
 			for(int j = i+1; j < table.size(); j++){
-				if(table[i].value == table[j].value){
+				if(table[j].value == -1){
+					continue;
+				}
+				if(table[i].value + table[j].value == 10 || (table[i].value > 10 && table[i].value == table[j].value)){
 					count++;
 					table[i] = deck.GetAndRemoveTopCard();
 					table[j] = deck.GetAndRemoveTopCard();
@@ -52,11 +55,11 @@ int numberOfMoves(Deck& deck){
 	return count;
 }
 
-
-void FillMap(map<int, int>& mp, int x){
+void FillMap(map<int, int>& mp, int x,const int &i){
+	int s = time(0);
 	while(x>0){
 		Deck deck;
-		deck.Shuffle();
+		deck.Shuffle(s+x*(i+1));
 		int res = numberOfMoves(deck);
 		mp[res]++;
 		x--;
@@ -71,13 +74,13 @@ int main(int argc, char* argv[]){
 	map<int , int> mp;
 	if(x>1000){
 		for(int i = 0; i < 4; i++){
-			th_list.emplace_back(thread(FillMap, ref(thread_maps[i]), x/4));
+			th_list.emplace_back(thread(FillMap, ref(thread_maps[i]), x/4, i));
 		}
 		for(auto& t : th_list){
 			t.join();
 		}
 	}else{
-		FillMap(mp, x);
+		FillMap(mp, x , 1);
 	}
 
 	for (const auto& local_map : thread_maps) {
