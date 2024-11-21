@@ -22,8 +22,13 @@ void Deck::Shuffle(){
 	random_shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
 }
 
+void Deck::Shuffle(const int& seed){
+	srand(seed);
+	random_shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
+}
+
 card Deck::GetAndRemoveTopCard(){
-	card toReturn = index > DECK_SIZE ? EmptyCard : deckarr[index];
+	card toReturn = index >= DECK_SIZE ? EmptyCard : deckarr[index];
 	index++;
 	return toReturn;
 }
