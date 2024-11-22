@@ -3,6 +3,7 @@
 #include <map>
 #include <thread>
 #include "deck.h"
+#include <chrono>
 #define table_length 3
 #define THREADNUM 2
 using namespace std;
@@ -56,8 +57,13 @@ int numberOfMoves(Deck& deck){
 	return count;
 }
 
+uint64_t ms(){
+	using namespace std::chrono;
+	return (duration_cast< milliseconds >(system_clock::now().time_since_epoch()).count());
+}
+
 void FillMap(map<int, int>& mp, int x){
-	srand(time(0));
+	srand(ms());
 	while(x>0){
 		Deck deck;
 		deck.Shuffle();
