@@ -1,8 +1,22 @@
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
+import argparse
 
-
+parser = argparse.ArgumentParser(
+        prog = 'Analyser.py',
+        description = 'analyses the output of the simulator')
+parser.add_argument(
+        'files',
+        nargs='+',
+        help = 'List of files to process')
+parser.add_argument(
+        '-c',
+        type=float,
+        default=0.161,
+        help = "bet return coefficient(default : 0.161)"
+        )
+args = parser.parse_args()
 
 def calculateChances(filename):
     f = open(filename, "r")
@@ -23,7 +37,7 @@ def calculateChances(filename):
         x = (numOfAttempts[i] / totalAttempt * 100)
         print(scores[i] , " : %" , x)
         total+= i * x
-        sumof += 0.165 * i * x
+        sumof += args.c * i * x
     print("------------------------")
     print(filename)
     print("xfac" , total)
@@ -33,7 +47,7 @@ def calculateChances(filename):
     f.close()
 total = 0
 count = 0
-for arg in sys.argv[1:]:
+for arg in args.files:
     x = calculateChances(arg)
     total+=x
     count+=1
