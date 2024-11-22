@@ -27,7 +27,6 @@ class Deck{
 		Deck();
 		card GetAndRemoveTopCard();
 		void Shuffle();
-		void Shuffle(const int& seed);
 		card CardAtIndex(const int& index);
 };
 
