@@ -1,10 +1,33 @@
-for x = 20.000.000 
+for x = 20,000,000 
 
-1 thread 1m 10s
-2 threads 47s
-4 threads 46s
-8 threads 52s
-16 threads 57s
+1 thread 
+real	0m37.671s
+user    0m37.628s
+sys     0m0.010s
+
+
+2 threads 
+real    0m29.562s
+user    0m50.221s
+sys     0m8.770s
+
+
+4 threads
+real    0m38.508s
+user    1m11.224s
+sys     1m5.515s
+
+
+8 threads
+real    0m54.643s
+user    1m36.510s
+sys     4m22.438s
+
+
+16 threads
+real    1m11.084s
+user    1m56.947s
+sys     13m59.373s
 
 
 cpu = AMD 7800x3D 16 core
