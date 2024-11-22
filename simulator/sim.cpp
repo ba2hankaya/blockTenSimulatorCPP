@@ -56,10 +56,10 @@ int numberOfMoves(Deck& deck){
 }
 
 void FillMap(map<int, int>& mp, int x,const int &i){
-	int s = time(0);
+	srand(time(0));
 	while(x>0){
 		Deck deck;
-		deck.Shuffle(s+x*(i+1));
+		deck.Shuffle();
 		int res = numberOfMoves(deck);
 		mp[res]++;
 		x--;
