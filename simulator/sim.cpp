@@ -4,6 +4,7 @@
 #include <thread>
 #include "deck.h"
 #define table_length 3
+#define THREADNUM 16
 using namespace std;
 
 
@@ -55,7 +56,7 @@ int numberOfMoves(Deck& deck){
 	return count;
 }
 
-void FillMap(map<int, int>& mp, int x,const int &i){
+void FillMap(map<int, int>& mp, int x){
 	srand(time(0));
 	while(x>0){
 		Deck deck;
@@ -66,29 +67,34 @@ void FillMap(map<int, int>& mp, int x,const int &i){
 	}
 }
 
+map<int , int> spawnThreads(const int& n, const int& numOfAttempts){
+	map<int , int> ret;
+	vector<map<int , int>> localmaps(n);
+	vector<thread> threads(n);
+	for(int i = 0; i < n; i++){
+		threads[i] = thread(FillMap, ref(localmaps[i]), numOfAttempts/n);
+	}
+	for(auto& t : threads){
+		t.join();
+	}
+	for(int i = 0; i < n;i++){
+		for(auto& line : localmaps[i]){
+			ret[line.first] += line.second;
+		}
+	}
+	return ret;
+}
+
 int main(int argc, char* argv[]){
 	cout << "running " << stoi(argv[1]) << " simulations..." << endl;
 	int x = stoi(argv[1]);
-	vector<thread> th_list;
-	vector<map<int ,int>> thread_maps(4);
 	map<int , int> mp;
 	if(x>1000){
-		for(int i = 0; i < 4; i++){
-			th_list.emplace_back(thread(FillMap, ref(thread_maps[i]), x/4, i));
-		}
-		for(auto& t : th_list){
-			t.join();
-		}
-	}else{
-		FillMap(mp, x , 1);
+		mp = spawnThreads(THREADNUM, x);
 	}
-
-	for (const auto& local_map : thread_maps) {
- 	       
-		for(auto& line : local_map){
-			mp[line.first] += line.second;
-		}
-    }
+	else{
+		FillMap(mp, x);
+	}
     for(auto& line : mp){
 		cout << line.first << " : " << line.second << endl;
 	}
