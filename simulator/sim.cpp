@@ -4,7 +4,7 @@
 #include <thread>
 #include "deck.h"
 #define table_length 3
-#define THREADNUM 16
+#define THREADNUM 2
 using namespace std;
 
 
