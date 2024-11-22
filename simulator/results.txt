@@ -1,36 +1,37 @@
 Formula for increasing bet multiplier:
 
-according to the result of 10 million simulations, the chances of getting scores are:
+according to the result of 20 million simulations, the chances of getting scores are:
 
 score : chance
-0  : % 7.643949999999999
-1  : % 11.08956
-2  : % 11.4376
-3  : % 10.53862
-4  : % 9.26407
-5  : % 8.05187
-6  : % 6.95936
-7  : % 6.03004
-8  : % 5.2714
-9  : % 4.5720600000000005
-10  : % 3.93957
-11  : % 3.30101
-12  : % 2.7027099999999997
-13  : % 2.12652
-14  : % 1.5956100000000002
-15  : % 1.1598300000000001
-16  : % 0.8129000000000001
-17  : % 0.53711
-18  : % 0.31895
-19  : % 0.14270000000000002
-24  : % 2.50456
+
+0   : % 6.649075
+1   : % 10.46358
+2   : % 11.431105
+3   : % 10.907975
+4   : % 9.76492
+5   : % 8.49297
+6   : % 7.254135000000001
+7   : % 6.1526
+8   : % 5.176265
+9   : % 4.32427
+10  : % 3.598015
+11  : % 2.95742
+12  : % 2.415485
+13  : % 1.93786
+14  : % 1.534935
+15  : % 1.188025
+16  : % 0.884595
+17  : % 0.633255
+18  : % 0.40591000000000005
+19  : % 0.19403499999999999
+24  : % 3.6335699999999997
 
 let's say bet multiplier starts at constant c and increases x each time the score increases( only 1 increase from score 19 to 24)
 
-then someone playing with 1 currency for 100 times would on average get 7.6 * c + 11 * (c+x) + %11(c+2x) and so on... according to the chances from the results of 10 mil games this sum comes to 100c + 566.38x
+then someone playing with 1 currency for 100 times would on average get 7.6 * c + 11 * (c+x) + %11(c+2x) and so on... according to the chances from the results of 10 mil games this sum comes to 100c + 585.08x according to the /analyser/analysisresults/20milsimanalysis.txt
 
 by setting this equal to the desired outcome we get
-100c + 566.38x = desiredOutcome
+100c + 585.08x = desiredOutcome
 if we want the average outcome of the game to give back 0.94 currency and the chance starting at 0
-100 * 0 + 566.38x = 94
-x = 0.166
+100 * 0 + 585.08x = 94
+x = 0.161
