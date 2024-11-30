@@ -12,6 +12,7 @@ Deck::Deck(){
 			deckarr[i+j*13] = mycard;
 		}
 	}
+	rng.seed(seed);
 }
 
 card Deck::CardAtIndex(const int& index){
@@ -19,7 +20,7 @@ card Deck::CardAtIndex(const int& index){
 }
 
 void Deck::Shuffle(){
-	random_shuffle(&deckarr[0], &deckarr[DECK_SIZE]);
+	shuffle(&deckarr[0], &deckarr[DECK_SIZE], rng);
 }
 
 card Deck::GetAndRemoveTopCard(){
@@ -28,3 +29,6 @@ card Deck::GetAndRemoveTopCard(){
 	return toReturn;
 }
 
+void Deck::SeedRng(const uint32_t& seed){rng.seed(seed);}
+
+void Deck::ResetToLast(){index = 0;} 
