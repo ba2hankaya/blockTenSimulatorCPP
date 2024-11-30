@@ -5,7 +5,7 @@
 #include "deck.h"
 #include <chrono>
 #define table_length 3
-#define THREADNUM 2
+#define THREADNUM 16
 using namespace std;
 
 
@@ -62,14 +62,17 @@ uint64_t ms(){
 	return (duration_cast< milliseconds >(system_clock::now().time_since_epoch()).count());
 }
 
-void FillMap(map<int, int>& mp, int x){
-	srand(ms());
+
+void FillMap(map<int, int>& mp, int x, const int& thread_id){	
+	Deck deck;
+	random_device rd;
+	deck.SeedRng(rd() + thread_id);
 	while(x>0){
-		Deck deck;
 		deck.Shuffle();
 		int res = numberOfMoves(deck);
 		mp[res]++;
 		x--;
+		deck.ResetToLast();
 	}
 }
 
@@ -78,7 +81,7 @@ map<int , int> spawnThreads(const int& n, const int& numOfAttempts){
 	vector<map<int , int>> localmaps(n);
 	vector<thread> threads(n);
 	for(int i = 0; i < n; i++){
-		threads[i] = thread(FillMap, ref(localmaps[i]), numOfAttempts/n);
+		threads[i] = thread(FillMap, ref(localmaps[i]), numOfAttempts/n, i);
 	}
 	for(auto& t : threads){
 		t.join();
@@ -99,7 +102,7 @@ int main(int argc, char* argv[]){
 		mp = spawnThreads(THREADNUM, x);
 	}
 	else{
-		FillMap(mp, x);
+		FillMap(mp, x,0);
 	}
     for(auto& line : mp){
 		cout << line.first << " : " << line.second << endl;
